@@ -77,7 +77,12 @@ def teardown_request(exception):
   except Exception as e:
     pass
 
-@app.route('/', methods=['POST'])
+@app.route('/')
+def login():
+	return render_template('Register.html')
+
+
+@app.route('/register', methods=['POST'])
 def home():
 	username = request.form['username']
 	password = request.form['pwd']
