@@ -93,11 +93,11 @@ def home():
     else:
         flash('wrong username!')
         return home()
-    if request.form['password'] == password and result is not None:
+    if request.form['pwd'] == password and result is not None:
         session['username'] = request.form['username']
         session['logged_in'] = True
         return render_template('index.html')
-    elif request.form['password'] != password:
+    elif request.form['pwd'] != password:
         flash('wrong password!')
         return render_template('Register.html')
 
