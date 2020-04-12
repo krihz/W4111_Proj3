@@ -1,28 +1,75 @@
 <html>
-  <style>
-    body{ 
-      font-size: 15pt;
-      font-family: arial;
-    }
-  </style>
-
-
 <body>
-  <h1>Some famous Computer Scientists</h1>
-  <div>{{data}}</div>
+  <head>
+    <title>Home Page</title>
+  </head>
 
-  <div>
-    {% for n in data %}
-    <div>{{n}}</div>
-    {% endfor %}
-  </div>
+  <h1>Home Page</h1>
 
-<p><a href="another">Go to the other page</a></p>
+  You can search past record here:
+  <hr>
+  <br>
+  <form method="POST" action="/Meal">
+  <p>Search for Meal Diary: <input type="text" name="name"> <input type="submit" value="Search"></p>
+  
+  </form>
+  <br>
+  <form method = "POST" action="/Exercise">
+  <p>Search for Exercise Diary: <input type="text" name="name"> <input type="submit" value="Search"></p>
 
-<form method="POST" action="/add">
-<p>Name of new computer scientist: <input type="text" name="name"> <input type="submit" value="Add"></p>
-</form>
+  </form>
+  <br>
+  <form method = "POST" action="/Food_calorie">
+  <p> Search for Food calorie: <input type="text" name="name"><input type="submit" value="Search"> </p>
+  
+  </form>
+  <br>
+  <form method = "POST" action="/Forum">
+  <p> Search for topic in Forum: <input type="text" name="name"> <input type="submit" value="Search"></p>
+  
+  </form>
+  <br>
+  <hr>
+  <br>
+  <br>
+ You can add new record here:
+  <hr>
+  <br>
 
+  <form method = "POST" action="/add_meal">
+  <p>Add new meal record:</p>
+  Meal Type: <input type="text" name="t">
+  Meal Time: <input type="text" name="time"> 
+  Meal Name: <input type="text" name="name"><br>
+  <br>Food Name: <input type="text" name="f_name">
+  Food Number: <input type="text" name="number">
+  <input type="submit" value="Add Meal">
+  </form>
+
+  <br>
+
+<form method = "POST" action="/add_exercise">
+  <p>Add new exercise record:</p>
+  Exercise Name: <input type="text" name="e_name">
+  Calories: <input type="text" name="c"> 
+  Time: <input type="text" name="time">
+  <input type="submit" value="Add Exercise">
+  </form>
+
+  <br>
+
+<form method = "POST" action="/add_food">
+  <p>Add new food information:</p>
+  Food Name: <input type="text" name="f_name">
+  Calories: <input type="text" name="c"> 
+  Protein: <input type="text" name="p">
+  Fat: <input type="text" name="f">  
+  <input type="submit" value="Add New Food">
+  </form>
+  
+  <br>
+  <hr>
+<p>Please enter time like <i>YYYY/MM/DD HH:MM</i></p>
 </body>
 
 
