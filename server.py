@@ -28,8 +28,8 @@ db = SQLAlchemy(app)
 # For example, if you had username gravano and password foobar, then the following line would be:
 #
 #     DATABASEURI = "postgresql://gravano:foobar@35.243.220.243/proj1part2"
-#
-DATABASEURI = "postgresql://hh2816:5783@35.231.103.173/proj1part2"
+#   35.231.103.173
+DATABASEURI = "postgresql://hh2816:5783@34.74.50.234/proj1part2"
 
 
 #
@@ -316,20 +316,22 @@ def home():
 @app.route('/register', methods=['POST','GET'])
 def register():
     if request.method == 'POST':
-      result = db.engine.execute("SELECT * FROM Register WHERE username = \'%s\'" %(request.form['username']))
-      user_id = g.conn.execute("SELECT max(id) FROM Register") +1
+        result = db.engine.execute("SELECT * FROM Register WHERE username = \'%s\'" %(request.form['username']))
+        user_id = g.conn.execute("SELECT max(id) FROM Register") +1
       
-      if result.rowcount > 0:
-          flash("Username Taken")
-			return render_template('Newuser.html')
-      else:  
-          db.engine.execute("INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,\'%s\', \'%s\', \'%s\', \'%s\', %s);" 
-          %user_id, request.form['First_Name'], request.form['Last_Name'], request.form['Username'],request.form['Email'],request.form['Password']))
-		session['username'] = request.form['Username']
-		session['logged_in'] = True		
-		return home()
-	  else:
-		return render_template('Newuser.html')
+        if result.rowcount > 0:
+            flash("Username Taken")
+            return render_template('Newuser.html')  
+        else:  
+            db.engine.execute("INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,\'%s\', \'%s\', \'%s\', \'%s\', %s);" %(user_id, request.form['First_Name'], request.form['Last_Name'], request.form['Username'],request.form['Email'],request.form['Password']))
+            session['username'] = request.form['Username']
+            session['logged_in'] = True	
+            return home()
+        
+    else:
+        return render_template('Newuser.html')
+		    
+		
 
 
 # @app.route('/login')
