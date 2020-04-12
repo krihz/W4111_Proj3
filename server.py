@@ -77,21 +77,23 @@ def teardown_request(exception):
   except Exception as e:
     pass
 
+@app.route('/', methods=['POST'])
+def home():
+	username = request.form['username']
+	password = request.form['pwd']
+	result = db.engine.execute("SELECT password FROM Register WHERE username = \'%s\'" %(username))
+	if result.rowcount > 0:
+		password = result.first()[0]
+	else:
+		flash('wrong username!')
+		return home()
+	if request.form['password'] == password and result is not None:
+		session['username'] = request.form['username']
+		session['logged_in'] = True
 
-#
-# @app.route is a decorator around index() that means:
-#   run index() whenever the user tries to access the "/" path using a GET request
-#
-# If you wanted the user to go to, for example, localhost:8111/foobar/ with POST or GET then you could use:
-#
-#       @app.route("/foobar/", methods=["POST", "GET"])
-#
-# PROTIP: (the trailing / in the path is important)
-# 
-# see for routing: http://flask.pocoo.org/docs/0.10/quickstart/#routing
-# see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
-#
-
+	elif request.form['password'] != password:
+		flash('wrong password!')
+	return render_template('Register.html')
 
 
 def getTime():
@@ -225,24 +227,6 @@ def add_food():
   g.conn.execute(cmd,f_id,f_name,c,p,f,c_id)
   return redirect('/index.html')
 
-
-@app.route('/login', methods=['POST'])
-def home():
-	username = request.form['username']
-	password = request.form['pwd']
-	result = db.engine.execute("SELECT password FROM Register WHERE username = \'%s\'" %(username))
-	if result.rowcount > 0:
-		password = result.first()[0]
-	else:
-		flash('wrong username!')
-		return home()
-	if request.form['password'] == password and result is not None:
-		session['username'] = request.form['username']
-		session['logged_in'] = True
-
-	elif request.form['password'] != password:
-		flash('wrong password!')
-	return render_template('Register.html')
 
 @app.route('/register', methods=['POST','GET'])
 def register():
