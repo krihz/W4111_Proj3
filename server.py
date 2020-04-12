@@ -28,8 +28,8 @@ db = SQLAlchemy(app)
 # For example, if you had username gravano and password foobar, then the following line would be:
 #
 #     DATABASEURI = "postgresql://gravano:foobar@35.243.220.243/proj1part2"
-#
-DATABASEURI = "postgresql://hh2816:5783@35.231.103.173/proj1part2"
+#   35.231.103.173
+DATABASEURI = "postgresql://hh2816:5783@34.74.50.234/proj1part2"
 
 
 #
