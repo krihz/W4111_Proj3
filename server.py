@@ -82,25 +82,24 @@ def login():
 	return render_template('Register.html')
 
 
-@app.route('/register', methods=['POST'])
+
+@app.route('/login', methods=['POST'])
 def home():
-	username = request.form['username']
-	password = request.form['pwd']
-	result = db.engine.execute("SELECT password FROM Register WHERE username = \'%s\'" %(username))
-	if result.rowcount > 0:
-		password = result.first()[0]
-	else:
-		flash('wrong username!')
-		return home()
-	if request.form['password'] == password and result is not None:
+    username = request.form['username']
+    password = request.form['pwd']
+    result = db.engine.execute("SELECT password FROM Register WHERE username = \'%s\'" %(username))
+    if result.rowcount > 0:
+        password = result.first()[0]
+    else:
+        flash('wrong username!')
+        return home()
+    if request.form['password'] == password and result is not None:
         session['username'] = request.form['username']
         session['logged_in'] = True
-        return render_template('Register.html')
-
-	elif request.form['password'] != password:
+        return render_template('index.html')
+    elif request.form['password'] != password:
         flash('wrong password!')
         return render_template('Register.html')
-
 
 def getTime():
     utc = datetime.datetime.utcnow()
