@@ -206,13 +206,17 @@ def add_meal():
   name = request.form('name') # meal name
   f_name = request.form('f_name') # food name
   f_id = g.conn.execute("SELECT food_id FROM food_database WHERE food_name LIKE %f_name%",{'f_name':f_name})
+  f_id = int(f_id.first()[0])
   number = request.form('name') # food number
   username = session.get('username') # username
-  c_id = g.conn.execute("SELECT ID FROM register WHERE username =  username",{'username':username}) # creator_id
+  c_id = g.conn.execute("SELECT ID FROM register WHERE username =  username",{'username':username})
+  c_id = int(c_id.first()[0])# creator_id
   # check if new meal
   old_meal = g.conn.execute("SELECT meal_id FROM Meal_Diary WHERE date_time =  time",{'time':time})
+  old_meal = int(old_meal.first()[0])
   if(old_meal != ''):
-      m_id = g.conn.execute("SELECT max(meal_id) FROM exercise_diary") + 1
+      m_id = g.conn.execute("SELECT max(meal_id) FROM Meal_Diary") 
+      m_id = int(m_id.first()[0])+1
       cmd1 = "INSERT INTO meal_diary(meal_id,type,date_time,name,creator_id) VALUES (%s,%s,%s,%s,%s);"
       g.conn.execute(cmd1,m_id,t,time,name,c_id)
   else:
@@ -220,7 +224,7 @@ def add_meal():
 
   cmd2 = "INSERT INTO Make_Meal(meal_id,food_id,number) VALUES (%s,%s,%s);"
   g.conn.execute(cmd2,m_id,f_id,number)
-  return redirect('/index.html')
+  return render_template('index.html')
 
 @app.route('/add_food', methods=['POST'])
 def add_food():
@@ -230,10 +234,12 @@ def add_food():
   f = request.form['f'] # fat
   u_name = session.get('username')
   c_id = g.conn.execute("SELECT ID FROM register WHERE username =  u_name",{'u_name':u_name})
-  f_id = g.conn.execute("SELECT max(food_id) FROM exercise_diary") + 1
+  c_id = int(c_id.first()[0])
+  f_id = g.conn.execute("SELECT max(food_id) FROM exercise_diary")
+  f_id = int(f_id.first()[0])+1
   cmd = "INSERT INTO Exercise_Diary(food_id,food_name,calories,protein,fat,creator_id) VALUES (%s,%s,%s,%s,%s,%s);"
   g.conn.execute(cmd,f_id,f_name,c,p,f,c_id)
-  return redirect('/index.html')
+  return render_template('index.html')
 
 
 @app.route('/register', methods=['POST','GET'])
