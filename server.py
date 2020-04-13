@@ -170,8 +170,8 @@ def Exercise():
   name = request.form['name']
   username = session.get('username')
   name = name
-  s = text("Select Exercise_Diary.exercise_name|| ', ' || Exercise_Diary.calories|| ', ' || Exercise_Diary.date_time FROM Exercise_Diary, Register"
-           "WHERE Exercise_Diary.id =Register.id"
+  s = text("Select Exercise_Diary.exercise_name|| ', ' || Exercise_Diary.calories|| ', ' || Exercise_Diary.date_time FROM Exercise_Diary, Register "
+           "WHERE Exercise_Diary.id =Register.id "
            "AND Register.username = :x1 AND TO_CHAR(Exercise_Diary.date_time, 'YYYY-MM-DD') = :x2")
   cursor = g.conn.execute(s, x1=username, x2=name).fetchall()
   if (name != ''):
