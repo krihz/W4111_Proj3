@@ -130,7 +130,7 @@ def Meal():
   name = request.form['name']
   name = datetime.datetime.strptime(name, '%Y-%m-%d %H:%M:%S')
   username = session.get('username')
-  name = name + '%'
+  # name = name + '%'
   if (name != ''):
     cursor =  g.conn.execute('select Meal_Diary.name, Meal_Diary.type, Meal_Diary.date_time from Meal_Diary, Register where Meal_Diary.creator_id = Register.id and Register.username = %(username)s and Meal_Diary.date_time = %(name)s',{'name': name},{'username': username}) 
     names = []
