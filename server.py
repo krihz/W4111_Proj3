@@ -191,9 +191,10 @@ def add_exercise():
   time = request.form['time'] # date_time
   username = session.get('username') # username
   u_id = g.conn.execute("SELECT ID FROM register WHERE username =  username",{'username':username}) # id
-  e_id = g.conn.execute("SELECT max(exercise_id) FROM exercise_diary") + 1 # exercise_id
+  e_id = g.conn.execute("SELECT max(exercise_id) as e FROM exercise_diary")  
+  e_id = e_id['e'] + 1
   cmd = "INSERT INTO Exercise_Diary(exercise_id,exercise_name,calories,date_time,id) VALUES (%s,%s,%s,%s,%s);"
-  g.conn.execute(cmd,e_id,e_name,c,time)
+  g.conn.execute(cmd,e_id,e_name,c,time,u_id)
   return redirect('/index.html')
 
 @app.route('/add_meal', methods=['POST'])
