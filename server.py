@@ -179,7 +179,7 @@ def Exercise():
     names.append(["Exercise_Name", "Calories", "Date_Time"])
     for result in cursor:
       names.append(result)
-    cursor.close()
+    # cursor.close()
     context = dict(data = names)
 
   else:
