@@ -132,7 +132,7 @@ def Meal():
   username = session.get('username')
   # name = name + '%'
   if (name != ''):
-    cursor =  g.conn.execute('select Meal_Diary.name, Meal_Diary.type, Meal_Diary.date_time from Meal_Diary, Register where Meal_Diary.creator_id = Register.id and Register.username = %(username)s and Meal_Diary.date_time = %(name)s',{'name': name},{'username': username}) 
+    cursor =  g.conn.execute('select Meal_Diary.name, Meal_Diary.type, Meal_Diary.date_time from Meal_Diary, Register where Meal_Diary.creator_id = Register.id and Register.username = %(username)s and Meal_Diary.date_time = %(name)s',{'name': name,'username': username}) 
     names = []
     # names.append(["Name", "Type", "Date_Time"])
     for result in cursor:
@@ -170,7 +170,7 @@ def Exercise():
   username = session.get('username')
   name = name + '%'
   if (name != ''):
-    cursor =  g.conn.execute("SELECT Exercise_Diary.exercise_name, Exercise_Diary.calories, Exercise_Diary.date_time FROM Exercise_Diary, Register WHERE Exercise_Diary.id =Register.id and Register.username = %(username)s and TO_CHAR(Exercise_Diary.date_time) LIKE %(name)s", {'name': name},{'username':username}) 
+    cursor =  g.conn.execute("SELECT Exercise_Diary.exercise_name, Exercise_Diary.calories, Exercise_Diary.date_time FROM Exercise_Diary, Register WHERE Exercise_Diary.id =Register.id and Register.username = %(username)s and TO_CHAR(Exercise_Diary.date_time) LIKE %(name)s", {'name': name,'username':username}) 
     names = []
     names.append(["Exercise_Name", "Calories", "Date_Time"])
     for result in cursor:
