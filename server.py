@@ -149,7 +149,7 @@ def Food_calorie():
   name = request.form['name']
   name = name + '%'
   if (name != ''):
-    cursor =  g.conn.execute("SELECT food_name, calories, protein,fat FROM Food_Database WHERE food_name LIKE %name%", {'name': name}) 
+    cursor =  g.conn.execute("SELECT calories FROM Food_Database WHERE food_name LIKE %name%", {'name': name}) 
     names = []
     # names.append(["Food_Name", "Calories", "Protein","Fat"])
     for result in cursor:
