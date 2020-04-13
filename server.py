@@ -208,7 +208,7 @@ def add_meal():
   f_name = '%' + f_name + '%'
   f_id = g.conn.execute("SELECT food_id FROM food_database WHERE food_name LIKE %(f_name)s",{'f_name':f_name})
   f_id = int(f_id.first()[0])
-  number = request.form('name') # food number
+  number = request.form['number'] # food number
   username = session.get('username') # username
   c_id = g.conn.execute("SELECT ID FROM register WHERE username =  username",{'username':username})
   c_id = int(c_id.first()[0])# creator_id
