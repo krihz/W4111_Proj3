@@ -216,14 +216,11 @@ def add_meal():
       cmd1 = "INSERT INTO meal_diary(meal_id,type,date_time,name,creator_id) VALUES (%s,%s,%s,%s,%s);"
       g.conn.execute(cmd1,m_id,t,time,name,c_id)
   else:
-      # old_meal.close()
-      # old_meal = int(old_meal.first()[0])
-      # m_id = old_meal
-      context = old_meal.first()[0]
-
-  # cmd2 = "INSERT INTO Make_Meal(meal_id,food_id,number) VALUES (%s,%s,%s);"
-  # g.conn.execute(cmd2,m_id,f_id,number)
-  return render_template('index.html',**context)
+      m_id = old_meal['m_id']
+  
+  cmd2 = "INSERT INTO Make_Meal(meal_id,food_id,number) VALUES (%s,%s,%s);"
+  g.conn.execute(cmd2,m_id,f_id,number)
+  return render_template('index.html')
 
 @app.route('/add_food', methods=['POST'])
 def add_food():
