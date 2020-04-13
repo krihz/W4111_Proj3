@@ -129,7 +129,7 @@ def Forum():
 @app.route('/Meal', methods=['POST'])
 def Meal():
   username = session.get('username')
-
+  username = '%' + username + '%' 
   cursor =  g.conn.execute('SELECT Meal_Diary.name, Meal_Diary.type, Meal_Diary.date_time FROM Meal_Diary, Register WHERE Meal_Diary.creator_id = Register.id and Register.username = username',{'username': username})
   names = []
   names.append(["Name", "Type", "Date_Time"])
@@ -160,8 +160,8 @@ def Food_calorie():
 
 @app.route('/Exercise', methods=['POST'])
 def Exercise():
-  
   username = session.get('username')
+  username = '%' + username + '%'
   cursor =  g.conn.execute("SELECT Exercise_Diary.exercise_name, Exercise_Diary.calories, TO_CHAR(Exercise_Diary.date_time) AS date FROM Exercise_Diary, Register WHERE Exercise_Diary.id =Register.id and Register.username = username",{'username':username}) 
   names = []
   names.append(["Exercise_Name", "Calories", "Date_Time"])
