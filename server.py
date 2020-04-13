@@ -235,9 +235,9 @@ def add_food():
   username = session.get('username')
   c_id = g.conn.execute("SELECT ID FROM register WHERE username =  username",{'username':username})
   c_id = int(c_id.first()[0])
-  f_id = g.conn.execute("SELECT max(food_id) FROM exercise_diary")
+  f_id = g.conn.execute("SELECT max(food_id) FROM food_database")
   f_id = int(f_id.first()[0])+1
-  cmd = "INSERT INTO Exercise_Diary(food_id,food_name,calories,protein,fat,creator_id) VALUES (%s,%s,%s,%s,%s,%s);"
+  cmd = "INSERT INTO food_database(food_id,food_name,calories,protein,fat,creator_id) VALUES (%s,%s,%s,%s,%s,%s);"
   g.conn.execute(cmd,f_id,f_name,c,p,f,c_id)
   return render_template('index.html')
 
