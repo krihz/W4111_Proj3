@@ -162,7 +162,7 @@ def Food_calorie():
 def Exercise():
   username = session.get('username')
   username = '%' + username + '%'
-  cursor =  g.conn.execute("SELECT Exercise_Diary.exercise_name, Exercise_Diary.calories, TO_CHAR(Exercise_Diary.date_time) AS date FROM Exercise_Diary, Register WHERE Exercise_Diary.id =Register.id and Register.username like %(username)s",{'username':username}) 
+  cursor =  g.conn.execute("SELECT Exercise_Diary.exercise_name, Exercise_Diary.calories, Exercise_Diary.date_time AS date FROM Exercise_Diary, Register WHERE Exercise_Diary.id =Register.id and Register.username like %(username)s",{'username':username}) 
   names = []
   names.append(["Exercise_Name", "Calories", "Date_Time"])
   for result in cursor:
