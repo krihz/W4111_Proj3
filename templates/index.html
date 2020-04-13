@@ -29,13 +29,19 @@
   
   </form>
   <br>
-  <div>{{data}}</div>
-
-  <div>
-    {% for n in data %}
-    <div>{{n}}</div>
-    {% endfor %}
-  </div>
+  <i>The search result is:</i> 
+ <br> 
+ <div> 
+ <table align = "center"> 
+ {% for item in data %} 
+   <tr> 
+ {% for i in item %} 
+ <td>{{i}}</td> 
+ {% endfor %} 
+ </tr> 
+   {% endfor %} 
+   </table> 
+ </div> 
   <hr>
   <br>
   <br>

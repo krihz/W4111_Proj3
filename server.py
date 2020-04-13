@@ -110,7 +110,7 @@ def Forum():
   name = request.form['name']
   name = name + '%'
   if (name != ''):
-    cursor =  g.conn.execute("SELECT topic, theme, content,date_time FROM Forums WHERE topic LIKE %name%", {'name': name}) 
+    cursor =  g.conn.execute("SELECT topic, theme, content,date_time FROM Forums WHERE topic LIKE %(name)s", {'name': name}) 
     names = []
     names.append(["Topic", "Theme", "Content","Date_Time"])
     for result in cursor:
@@ -168,7 +168,7 @@ def Exercise():
   username = session.get('username')
   name = name + '%'
   if (name != ''):
-    cursor =  g.conn.execute("SELECT Exercise_Diary.exercise_name, Exercise_Diary.calories, Exercise_Diary.date_time FROM Exercise_Diary, Register WHERE Exercise_Diary.id =Register.id and Register.username = username and Exercise_Diary.exercise_name LIKE %name%", {'name': name},{'username':username}) 
+    cursor =  g.conn.execute("SELECT Exercise_Diary.exercise_name, Exercise_Diary.calories, Exercise_Diary.date_time FROM Exercise_Diary, Register WHERE Exercise_Diary.id =Register.id and Register.username = username and Exercise_Diary.exercise_name LIKE %(name)s", {'name': name},{'username':username}) 
     names = []
     names.append(["Exercise_Name", "Calories", "Date_Time"])
     for result in cursor:
