@@ -87,13 +87,11 @@ def login():
 def home():
     username = request.form['username']
     password = request.form['pwd']
-    result = g.conn.execute("SELECT password FROM Register WHERE username = \'%s\'" %(username))
-    if result.rowcount > 0:
-        password = result.first()[0]
-    else:
+    result = g.conn.execute("SELECT password FROM Register WHERE username = username", {'username': username}) 
+    if result is None:
         flash('wrong username!')
         return render_template('Register.html')
-    if request.form['pwd'] == password and result is not None:
+    if request.form['pwd'] == result:
         session['username'] = request.form['username']
         session['logged_in'] = True
         return render_template('index.html')
