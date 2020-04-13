@@ -17,7 +17,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
 
 #
 # The following is a dummy URI that does not connect to a valid database. You will need to modify it to connect to your Part 2 database in order to use the data.
@@ -87,7 +87,7 @@ def login():
 def home():
     username = request.form['username']
     password = request.form['pwd']
-    result = db.engine.execute("SELECT password FROM Register WHERE username = \'%s\'" %(username))
+    result = g.conn.execute("SELECT password FROM Register WHERE username = \'%s\'" %(username))
     if result.rowcount > 0:
         password = result.first()[0]
     else:
@@ -236,14 +236,14 @@ def add_food():
 @app.route('/register', methods=['POST','GET'])
 def register():
     if request.method == 'POST':
-        result = db.engine.execute("SELECT * FROM Register WHERE username = \'%s\'" %(request.form['username']))
+        result = g.conn.execute("SELECT * FROM Register WHERE username = \'%s\'" %(request.form['username']))
         user_id = g.conn.execute("SELECT max(id) FROM Register") +1
       
         if result.rowcount > 0:
             flash("Username Taken")
             return render_template('Newuser.html')  
         else:  
-            db.engine.execute("INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,\'%s\', \'%s\', \'%s\', \'%s\', %s);" %(user_id, request.form['First_Name'], request.form['Last_Name'], request.form['Username'],request.form['Email'],request.form['Password']))
+            g.conn.execute("INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,\'%s\', \'%s\', \'%s\', \'%s\', %s);" %(user_id, request.form['First_Name'], request.form['Last_Name'], request.form['Username'],request.form['Email'],request.form['Password']))
             session['username'] = request.form['Username']
             session['logged_in'] = True	
             return home()
