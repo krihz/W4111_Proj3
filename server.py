@@ -173,14 +173,14 @@ def Exercise():
   s = text("Select Exercise_Diary.exercise_name|| ', ' || Exercise_Diary.calories|| ', ' || Exercise_Diary.date_time FROM Exercise_Diary, Register "
            "WHERE Exercise_Diary.id =Register.id "
            "AND Register.username = :x1 AND TO_CHAR(Exercise_Diary.date_time, 'YYYY-MM-DD') = :x2")
-  cursor = g.conn.execute(s, x1=username, x2=name).fetchall()
+  cursor = g.conn.execute(s, x1=username, x2=name)
   if (name != ''):
-    # names = []
-    # names.append(["Exercise_Name", "Calories", "Date_Time"])
-    # for result in cursor:
-    #   names.append(result)
-    # cursor.close()
-    context = cursor
+    names = []
+    names.append(["Exercise_Name", "Calories", "Date_Time"])
+    for result in cursor:
+      names.append(result)
+    cursor.close()
+    context = dict(data = names)
 
   else:
     names = []
