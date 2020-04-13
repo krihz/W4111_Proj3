@@ -130,7 +130,7 @@ def Meal():
   username = session.get('username')
   name = name + '%'
   if (name != ''):
-    cursor =  g.conn.execute('select Meal_Diary.name, Meal_Diary.type, Meal_Diary.date_time from Meal_Diary, Register where Meal_Diary.creator_id = Register.id and Register.username = username and Meal_Diary.name LIKE %name%',{'name': name},{'username': username}) 
+    cursor =  g.conn.execute('select Meal_Diary.name, Meal_Diary.type, Meal_Diary.date_time from Meal_Diary, Register where Meal_Diary.creator_id = Register.id and Register.username = username and Meal_Diary.date_time LIKE %(name)s',{'name': name},{'username': username}) 
     names = []
     # names.append(["Name", "Type", "Date_Time"])
     for result in cursor:
@@ -147,13 +147,13 @@ def Meal():
 @app.route('/Food_calorie', methods=['POST'])
 def Food_calorie():
   name = request.form['name']
-  name = name + '%'
+  name = '%' + name + '%'
   if (name != ''):
     cursor =  g.conn.execute("SELECT calories FROM Food_Database WHERE food_name LIKE %(name)s", {'name': name}) 
     names = []
-    # names.append(["Food_Name", "Calories", "Protein","Fat"])
+    names.append(["Food_Name", "Calories", "Protein","Fat"])
     for result in cursor:
-      names.append(result['calories'])
+      names.append(result)
     cursor.close()
     context = dict(data = names)
   else:
