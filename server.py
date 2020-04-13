@@ -206,7 +206,11 @@ def add_meal():
   # check if new meal
   cmd = "SELECT meal_id FROM Meal_Diary WHERE date_time = %s AND creator_id = %s"
   old_meal = g.conn.execute(cmd,time,c_id)
-  if (old_meal is None):
+  names = []
+  for result in old_meal:
+    names.append(result)
+  old_meal.close()
+  if (names is None):
       m_id = g.conn.execute("SELECT max(meal_id) FROM Meal_Diary") 
       m_id = int(m_id.first()[0])+1
       cmd1 = "INSERT INTO meal_diary(meal_id,type,date_time,name,creator_id) VALUES (%s,%s,%s,%s,%s);"
@@ -261,8 +265,11 @@ def info():
     s = request.form['Sex']
     tc = request.form['Target_Calories']
     result = g.conn.execute("SELECT id FROM user_info WHERE id = %(user_id)s",{'user_id':user_id})
-    result = result.first()[0]
-    if (result is None):
+    names = []
+    for r in result:
+        names.append(r)
+    result.close()
+    if (names is None):
         cmd1 = "INSERT INTO user_info (id, Current_Weight, Height, Goal_Weight,Sex,Target_Calories) VALUES (%s,%s,%s,%s,%s,%s);"
         g.conn.execute(cmd1,user_id,cw,h,gw,s,tc)
     else:
