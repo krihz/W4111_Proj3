@@ -191,13 +191,8 @@ def add_exercise():
   time = request.form['time'] # date_time
   username = session.get('username') # username
   u_id = g.conn.execute("SELECT ID FROM register WHERE username =  username",{'username':username}) # id
-  e_id = g.conn.execute("SELECT max(exercise_id) FROM exercise_diary")
-  names = []
-  names.append(["e"])
-  for result in e_id:
-      names.append(result)
-  e_id.close()  
-  e_id = result['e'] + 1
+  e = g.conn.execute("SELECT max(exercise_id) FROM exercise_diary")
+  e_id = int(e[0]) + 1
   cmd = "INSERT INTO Exercise_Diary(exercise_id,exercise_name,calories,date_time,id) VALUES (%s,%s,%s,%s,%s);"
   g.conn.execute(cmd,e_id,e_name,c,time,u_id)
   return redirect('/index.html')
