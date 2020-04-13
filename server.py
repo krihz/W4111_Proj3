@@ -91,14 +91,14 @@ def home():
     if result.rowcount > 0:
         password = result.first()[0]
     else:
-        flash('wrong username!')
+        print('wrong username!')
         return home()
     if request.form['pwd'] == password and result is not None:
         session['username'] = request.form['username']
         session['logged_in'] = True
         return render_template('index.html')
     elif request.form['pwd'] != password:
-        flash('wrong password!')
+        print('wrong password!')
         return render_template('Register.html')
 
 def getTime():
