@@ -219,7 +219,7 @@ def add_meal():
       # old_meal.close()
       # old_meal = int(old_meal.first()[0])
       # m_id = old_meal
-      context = dict(data = names)
+      context = old_meal.first()[0]
 
   # cmd2 = "INSERT INTO Make_Meal(meal_id,food_id,number) VALUES (%s,%s,%s);"
   # g.conn.execute(cmd2,m_id,f_id,number)
