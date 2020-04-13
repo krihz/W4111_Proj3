@@ -151,15 +151,15 @@ def Food_calorie():
   if (name != ''):
     cursor =  g.conn.execute("SELECT food_name, calories, protein,fat FROM Food_Database WHERE food_name LIKE %name%", {'name': name}) 
     names = []
-    names.append(["Food_Name", "Calories", "Protein","Fat"])
+    # names.append(["Food_Name", "Calories", "Protein","Fat"])
     for result in cursor:
       names.append(result)
     cursor.close()
-    context = dict(data = names)
+    context = names
 
   else:
     names = []
-    context = dict(data = names)
+    context = names
 
   return render_template("index.html", **context)
 
