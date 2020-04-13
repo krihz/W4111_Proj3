@@ -196,6 +196,7 @@ def add_exercise():
   e_id = int(e.first()[0])+1
   cmd = "INSERT INTO Exercise_Diary(exercise_id,exercise_name,calories,date_time,id) VALUES (%s,%s,%s,%s,%s);"
   g.conn.execute(cmd,e_id,e_name,c,time,u_id)
+  flash('Successfully added!')
   return render_template('index.html')
 
 @app.route('/add_meal', methods=['POST'])
