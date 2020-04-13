@@ -88,6 +88,7 @@ def home():
     username = request.form['username']
     password = request.form['pwd']
     result = g.conn.execute("SELECT password FROM Register WHERE username = username", {'username': username}) 
+    print(result)
     if result is None:
         flash('wrong username!')
         return render_template('Register.html')
