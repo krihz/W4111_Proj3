@@ -234,28 +234,26 @@ def add_food():
   return render_template('index.html')
 
 
-@app.route('/register', methods=['POST','GET'])
+@app.route('/register', methods=['POST'])
 def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        result = g.conn.execute("SELECT * FROM Register WHERE username = username",{'username':username})
-        user_id = g.conn.execute("SELECT max(id) FROM Register")
-        user_id = int(user_id.first()[0])+1
-        if result.rowcount > 0:
-            flash("Username Taken")
-            return render_template('Newuser.html')  
-        else: 
-            fn = request.form['First_Name']
-            ln = request.form['Last_Name']
-            un = request.form['Username']
-            em = request.form['Email']
-            pw = request.form['Password']
-            cmd = "INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,%s,%s, %s,%s,%s);"
-            g.conn.execute(cmd,fn,ln,un,em,pw)
-            return render_template('Register.html')
+    username = request.form['username']
+    result = g.conn.execute("SELECT * FROM Register WHERE username = username",{'username':username})
+    user_id = g.conn.execute("SELECT max(id) FROM Register")
+    user_id = int(user_id.first()[0])+1
+    if result.rowcount > 0:
+        flash("Username Taken")
+        return render_template('Newuser.html')  
+    else: 
+        fn = request.form['First_Name']
+        ln = request.form['Last_Name']
+        un = request.form['Username']
+        em = request.form['Email']
+        pw = request.form['Password']
+        cmd = "INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,%s,%s, %s,%s,%s);"
+        g.conn.execute(cmd,fn,ln,un,em,pw)
+        return render_template('Register.html')
         
-    else:
-        return render_template('Newuser.html')
+    
 		    
 		
 
