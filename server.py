@@ -232,8 +232,8 @@ def add_food():
   c = request.form['c'] # calorie
   p = request.form['p'] # protein
   f = request.form['f'] # fat
-  u_name = session.get('username')
-  c_id = g.conn.execute("SELECT ID FROM register WHERE username =  u_name",{'u_name':u_name})
+  username = session.get('username')
+  c_id = g.conn.execute("SELECT ID FROM register WHERE username =  username",{'username':username})
   c_id = int(c_id.first()[0])
   f_id = g.conn.execute("SELECT max(food_id) FROM exercise_diary")
   f_id = int(f_id.first()[0])+1
