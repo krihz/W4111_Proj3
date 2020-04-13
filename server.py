@@ -203,8 +203,8 @@ def add_exercise():
 def add_meal():
   t = request.form['t'] # type
   time = request.form['time'] # date_time
-  name = request.form('name') # meal name
-  f_name = request.form('f_name') # food name
+  name = request.form['name'] # meal name
+  f_name = request.form['f_name'] # food name
   f_id = g.conn.execute("SELECT food_id FROM food_database WHERE food_name LIKE %f_name%",{'f_name':f_name})
   f_id = int(f_id.first()[0])
   number = request.form('name') # food number
