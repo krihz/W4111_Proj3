@@ -216,7 +216,8 @@ def add_meal():
       cmd1 = "INSERT INTO meal_diary(meal_id,type,date_time,name,creator_id) VALUES (%s,%s,%s,%s,%s);"
       g.conn.execute(cmd1,m_id,t,time,name,c_id)
   else:
-      m_id = names[1]
+      context = dict(data = names)
+      m_id = context['m_id']
   
   cmd2 = "INSERT INTO Make_Meal(meal_id,food_id,number) VALUES (%s,%s,%s);"
   g.conn.execute(cmd2,m_id,f_id,number)
