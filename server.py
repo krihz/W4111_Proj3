@@ -206,13 +206,13 @@ def add_meal():
   # check if new meal
   cmd = "SELECT meal_id FROM Meal_Diary WHERE date_time = %s AND creator_id = %s"
   old_meal = g.conn.execute(cmd,time,c_id)
-  old_meal = int(old_meal.first()[0])
   if (old_meal == ''):
       m_id = g.conn.execute("SELECT max(meal_id) FROM Meal_Diary") 
       m_id = int(m_id.first()[0])+1
       cmd1 = "INSERT INTO meal_diary(meal_id,type,date_time,name,creator_id) VALUES (%s,%s,%s,%s,%s);"
       g.conn.execute(cmd1,m_id,t,time,name,c_id)
   else:
+      old_meal = int(old_meal.first()[0])
       m_id = old_meal
 
   cmd2 = "INSERT INTO Make_Meal(meal_id,food_id,number) VALUES (%s,%s,%s);"
