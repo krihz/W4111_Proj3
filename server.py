@@ -143,7 +143,7 @@ def Meal():
   else:
     names = []
     context = names
-
+  context = context.first()[0]
   return render_template("index.html", **context)
 
 @app.route('/Food_calorie', methods=['POST'])
