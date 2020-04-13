@@ -190,7 +190,8 @@ def add_exercise():
   c = request.form['c'] # calories
   time = request.form['time'] # date_time
   username = session.get('username') # username
-  u_id = g.conn.execute("SELECT ID FROM register WHERE username =  username",{'username':username}) # id
+  u = g.conn.execute("SELECT ID FROM register WHERE username =  username",{'username':username}) 
+  u_id = int(u.first()[0])# id
   e = g.conn.execute("SELECT max(exercise_id) FROM exercise_diary")
   e_id = int(e.first()[0])+1
   cmd = "INSERT INTO Exercise_Diary(exercise_id,exercise_name,calories,date_time,id) VALUES (%s,%s,%s,%s,%s);"
