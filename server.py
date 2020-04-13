@@ -215,6 +215,7 @@ def add_meal():
       cmd1 = "INSERT INTO meal_diary(meal_id,type,date_time,name,creator_id) VALUES (%s,%s,%s,%s,%s);"
       g.conn.execute(cmd1,m_id,t,time,name,c_id)
   else:
+      old_meal.close()
       old_meal = int(old_meal.first()[0])
       m_id = old_meal
 
@@ -271,6 +272,7 @@ def info():
         cmd1 = "INSERT INTO user_info (id, Current_Weight, Height, Goal_Weight,Sex,Target_Calories) VALUES (%s,%s,%s,%s,%s,%s);"
         g.conn.execute(cmd1,user_id,cw,h,gw,s,tc)
     else:
+        result.close()
         cmd2 = "UPDATE user_info SET Current_Weight = %s, Height = %s, Goal_Weight = %s, Sex = %s, Target_Calories = %s WHERE id = %s;"
         g.conn.execute(cmd2,cw,h,gw,s,tc,user_id)
     return render_template('index.html')    
