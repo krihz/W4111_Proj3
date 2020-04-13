@@ -128,23 +128,16 @@ def Forum():
 
 @app.route('/Meal', methods=['POST'])
 def Meal():
-  name = request.form['name']
-  name = datetime.datetime.strptime(name, '%Y-%m-%d %H:%M:%S')
   username = session.get('username')
-  # name = name + '%'
-  if (name != ''):
-    cursor =  g.conn.execute('select Meal_Diary.name, Meal_Diary.type, Meal_Diary.date_time from Meal_Diary, Register where Meal_Diary.creator_id = Register.id and Register.username = %(username)s and Meal_Diary.date_time = %(name)s',{'name': name,'username': username}) 
-    names = []
-    # names.append(["Name", "Type", "Date_Time"])
-    for result in cursor:
-      names.append(result)
-    cursor.close()
-    context = names
 
-  else:
-    names = []
-    context = names
-  context = context[0]
+  cursor =  g.conn.execute('SELECT Meal_Diary.name, Meal_Diary.type, Meal_Diary.date_time FROM Meal_Diary, Register WHERE Meal_Diary.creator_id = Register.id and Register.username = username',{'username': username})
+  names = []
+  names.append(["Name", "Type", "Date_Time"])
+  for result in cursor:
+     names.append(result)
+  cursor.close()
+  context = dict(data = names)
+
   return render_template("index.html", **context)
 
 @app.route('/Food_calorie', methods=['POST'])
@@ -167,25 +160,15 @@ def Food_calorie():
 
 @app.route('/Exercise', methods=['POST'])
 def Exercise():
-  name = request.form['name']
+  
   username = session.get('username')
-  name = name
-  s = text("Select Exercise_Diary.exercise_name|| ', ' || Exercise_Diary.calories|| ', ' || Exercise_Diary.date_time FROM Exercise_Diary, Register "
-           "WHERE Exercise_Diary.id =Register.id "
-           "AND Register.username = :x1 AND TO_CHAR(Exercise_Diary.date_time, 'YYYY-MM-DD') = :x2")
-  cursor = g.conn.execute(s, x1=username, x2=name)
-  if (name != ''):
-    names = []
-    names.append(["Exercise_Name", "Calories", "Date_Time"])
-    for result in cursor:
-      names.append(result)
-    cursor.close()
-    context = dict(data = names)
-
-  else:
-    names = []
-    context = dict(data = names)
-
+  cursor =  g.conn.execute("SELECT Exercise_Diary.exercise_name, Exercise_Diary.calories, TO_CHAR(Exercise_Diary.date_time) AS date FROM Exercise_Diary, Register WHERE Exercise_Diary.id =Register.id and Register.username = username",{'username':username}) 
+  names = []
+  names.append(["Exercise_Name", "Calories", "Date_Time"])
+  for result in cursor:
+     names.append(result)
+  cursor.close()      
+  context = dict(data = names)
   return render_template("index.html", **context)
 
 @app.route('/add_exercise', methods=['POST'])
