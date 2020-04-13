@@ -236,22 +236,17 @@ def add_food():
 
 @app.route('/register', methods=['POST'])
 def register():
-    username = request.form['username']
-    result = g.conn.execute("SELECT * FROM Register WHERE username = username",{'username':username})
+    # result = g.conn.execute("SELECT * FROM Register WHERE username = username",{'username':username})
     user_id = g.conn.execute("SELECT max(id) FROM Register")
     user_id = int(user_id.first()[0])+1
-    if result.rowcount > 0:
-        flash("Username Taken")
-        return render_template('Newuser.html')  
-    else: 
-        fn = request.form['First_Name']
-        ln = request.form['Last_Name']
-        un = request.form['Username']
-        em = request.form['Email']
-        pw = request.form['Password']
-        cmd = "INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,%s,%s, %s,%s,%s);"
-        g.conn.execute(cmd,fn,ln,un,em,pw)
-        return render_template('Register.html')
+    fn = request.form['First_Name']
+    ln = request.form['Last_Name']
+    un = request.form['Username']
+    em = request.form['Email']
+    pw = request.form['Password']
+    cmd = "INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,%s,%s, %s,%s,%s);"
+    g.conn.execute(cmd,fn,ln,un,em,pw)
+    return render_template('Register.html')
         
     
 		    
