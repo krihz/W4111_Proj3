@@ -15,6 +15,7 @@ from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response, flash, session
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql import text
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
@@ -169,8 +170,11 @@ def Exercise():
   name = request.form['name']
   username = session.get('username')
   name = name + '%'
+  s = text("Exercise_Diary.exercise_name|| ', ' || Exercise_Diary.calories|| ', ' || Exercise_Diary.date_time FROM Exercise_Diary, Register"
+           "WHERE Exercise_Diary.id =Register.id"
+           "AND Register.username = :x1 AND TO_CHAR(Exercise_Diary.date_time) LIKE :x2")
+  cursor = g.conn.execute(s, x1=username, x2=name).fetchall()
   if (name != ''):
-    cursor =  g.conn.execute("SELECT Exercise_Diary.exercise_name, Exercise_Diary.calories, Exercise_Diary.date_time FROM Exercise_Diary, Register WHERE Exercise_Diary.id =Register.id and Register.username = %(username)s and TO_CHAR(Exercise_Diary.date_time) LIKE %(name)s", {'name': name,'username':username}) 
     names = []
     names.append(["Exercise_Name", "Calories", "Date_Time"])
     for result in cursor:
