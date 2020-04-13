@@ -244,8 +244,8 @@ def register():
     un = request.form['Username']
     em = request.form['Email']
     pw = request.form['Password']
-    cmd = "INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,%s,%s, %s,%s,%s);"
-    g.conn.execute(cmd,fn,ln,un,em,pw)
+    cmd = "INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,%s,%s,%s,%s,%s);"
+    g.conn.execute(cmd,user_id,fn,ln,un,em,pw)
     return render_template('Register.html')
         
     
