@@ -203,22 +203,10 @@ def add_meal():
   username = session.get('username') # username
   c_id = g.conn.execute("SELECT ID FROM register WHERE username =  %(username)s",{'username':username})
   c_id = int(c_id.first()[0])# creator_id
-  # check if new meal
-  cmd = "SELECT meal_id FROM Meal_Diary WHERE date_time = %s AND creator_id = %s"
-  old_meal = g.conn.execute(cmd,time,c_id)
-  names = []
-  names.append(['m_id'])
-  for result in old_meal:
-    names.append(result) 
-  if (len(names)==0):
-      m_id = g.conn.execute("SELECT max(meal_id) FROM Meal_Diary") 
-      m_id = int(m_id.first()[0])+1
-      cmd1 = "INSERT INTO meal_diary(meal_id,type,date_time,name,creator_id) VALUES (%s,%s,%s,%s,%s);"
-      g.conn.execute(cmd1,m_id,t,time,name,c_id)
-  else:
-      context = dict(data = names)
-      m_id = context['m_id']
-  
+  m_id = g.conn.execute("SELECT max(meal_id) FROM Meal_Diary") 
+  m_id = int(m_id.first()[0])+1
+  cmd1 = "INSERT INTO meal_diary(meal_id,type,date_time,name,creator_id) VALUES (%s,%s,%s,%s,%s);"
+  g.conn.execute(cmd1,m_id,t,time,name,c_id)
   cmd2 = "INSERT INTO Make_Meal(meal_id,food_id,number) VALUES (%s,%s,%s);"
   g.conn.execute(cmd2,m_id,f_id,number)
   return render_template('index.html')
@@ -249,8 +237,16 @@ def register():
     un = request.form['Username']
     em = request.form['Email']
     pw = request.form['Password']
-    cmd = "INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,%s,%s,%s,%s,%s);"
-    g.conn.execute(cmd,user_id,fn,ln,un,em,pw)
+    cmd1 = "INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,%s,%s,%s,%s,%s);"
+    g.conn.execute(cmd1,user_id,fn,ln,un,em,pw)
+    
+    cw = request.form['Current_Weight']
+    h = request.form['Height']
+    gw = request.form['Goal_Weight']
+    s = request.form['Sex']
+    tc = request.form['Target_Calories']
+    cmd2 = "INSERT INTO user_info (id, Current_Weight, Height, Goal_Weight,Sex,Target_Calories) VALUES (%s,%s,%s,%s,%s,%s);"
+    g.conn.execute(cmd2,user_id,cw,h,gw,s,tc)
     return render_template('Register.html')
         
 @app.route('/info', methods=['POST'])
@@ -264,20 +260,24 @@ def info():
     gw = request.form['Goal_Weight']
     s = request.form['Sex']
     tc = request.form['Target_Calories']
-    result = g.conn.execute("SELECT id FROM user_info WHERE id = %(user_id)s",{'user_id':user_id})
-    names = []
-    for r in result:
-        names.append(r)
-    if (len(names) == 0):
-        cmd1 = "INSERT INTO user_info (id, Current_Weight, Height, Goal_Weight,Sex,Target_Calories) VALUES (%s,%s,%s,%s,%s,%s);"
-        g.conn.execute(cmd1,user_id,cw,h,gw,s,tc)
-    else:
-        result.close()
-        cmd2 = "UPDATE user_info SET Current_Weight = %s, Height = %s, Goal_Weight = %s, Sex = %s, Target_Calories = %s WHERE id = %s;"
-        g.conn.execute(cmd2,cw,h,gw,s,tc,user_id)
+    cmd = "UPDATE user_info SET Current_Weight = %s, Height = %s, Goal_Weight = %s, Sex = %s, Target_Calories = %s WHERE id = %s;"
+    g.conn.execute(cmd,cw,h,gw,s,tc,user_id)
     return render_template('index.html')    
 		    
-		
+@app.route('/addForum', methods=['POST'])
+def addForum():
+    username = session.get('username')
+    user_id = g.conn.execute("SELECT id FROM Register WHERE username = %(username)s",{'username':username})
+    f_id = g.conn.execute("SELECT max(forums_id) FROM Forums") 
+    f_id = int(f_id.first()[0])+1
+    Topic = request.form['Topic']
+    Theme = request.form['Theme']
+    Date_Time = request.form['Date_Time']
+    Content = request.form['Content']
+    
+    cmd = "INSERT INTO Forums (forums_id, topic, theme, date_time,id,content) VALUES (%s,%s,%s,%s,%s,%s);"
+    g.conn.execute(cmd,f_id,Topic,Theme,Date_Time,user_id,Content)
+    return render_template('index.html')
 
 
 # @app.route('/login')
