@@ -132,15 +132,15 @@ def Meal():
   if (name != ''):
     cursor =  g.conn.execute('select Meal_Diary.name, Meal_Diary.type, Meal_Diary.date_time from Meal_Diary, Register where Meal_Diary.creator_id = Register.id and Register.username = username and Meal_Diary.name LIKE %name%',{'name': name},{'username': username}) 
     names = []
-    names.append(["Name", "Type", "Date_Time"])
+    # names.append(["Name", "Type", "Date_Time"])
     for result in cursor:
       names.append(result)
     cursor.close()
-    context = dict(data = names)
+    context = names
 
   else:
     names = []
-    context = dict(data = names)
+    context = names
 
   return render_template("index.html", **context)
 
