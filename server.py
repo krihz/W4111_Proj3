@@ -175,12 +175,12 @@ def Exercise():
            "AND Register.username = :x1 AND TO_CHAR(Exercise_Diary.date_time, 'YYYY-MM-DD') = :x2")
   cursor = g.conn.execute(s, x1=username, x2=name).fetchall()
   if (name != ''):
-    names = []
-    names.append(["Exercise_Name", "Calories", "Date_Time"])
-    for result in cursor:
-      names.append(result)
+    # names = []
+    # names.append(["Exercise_Name", "Calories", "Date_Time"])
+    # for result in cursor:
+    #   names.append(result)
     # cursor.close()
-    context = dict(data = names)
+    context = cursor
 
   else:
     names = []
