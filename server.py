@@ -89,7 +89,7 @@ def login():
 def home():
     username = request.form['username']
     password = request.form['pwd']
-    result = g.conn.execute("SELECT password FROM Register WHERE username = username", {'username': username}) 
+    result = g.conn.execute("SELECT password FROM Register WHERE username = %(username)s", {'username': username}) 
     result = result.first()[0]
     if result is None:
         flash('wrong username!')
@@ -246,7 +246,9 @@ def register():
     pw = request.form['Password']
     cmd = "INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,%s,%s,%s,%s,%s);"
     g.conn.execute(cmd,user_id,fn,ln,un,em,pw)
-    return render_template('Register.html')
+    session['username'] = request.form['username']
+    session['logged_in'] = True
+    return render_template('index.html')
         
     
 		    
