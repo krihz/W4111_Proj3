@@ -221,8 +221,8 @@ def add_meal():
       # m_id = old_meal
       context = dict(data = names)
 
-  cmd2 = "INSERT INTO Make_Meal(meal_id,food_id,number) VALUES (%s,%s,%s);"
-  g.conn.execute(cmd2,m_id,f_id,number)
+  # cmd2 = "INSERT INTO Make_Meal(meal_id,food_id,number) VALUES (%s,%s,%s);"
+  # g.conn.execute(cmd2,m_id,f_id,number)
   return render_template('index.html',**context)
 
 @app.route('/add_food', methods=['POST'])
