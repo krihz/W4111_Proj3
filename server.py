@@ -267,9 +267,7 @@ def info():
     names = []
     for r in result:
         names.append(r)
-    result.close()
-    
-    if (names is None):
+    if (len(names) == 0):
         cmd1 = "INSERT INTO user_info (id, Current_Weight, Height, Goal_Weight,Sex,Target_Calories) VALUES (%s,%s,%s,%s,%s,%s);"
         g.conn.execute(cmd1,user_id,cw,h,gw,s,tc)
     else:
