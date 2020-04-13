@@ -209,7 +209,7 @@ def add_meal():
   names = []
   for result in old_meal:
     names.append(result)
-  if (names is None):
+  if (len(names)==0):
       m_id = g.conn.execute("SELECT max(meal_id) FROM Meal_Diary") 
       m_id = int(m_id.first()[0])+1
       cmd1 = "INSERT INTO meal_diary(meal_id,type,date_time,name,creator_id) VALUES (%s,%s,%s,%s,%s);"
