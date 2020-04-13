@@ -12,7 +12,7 @@ import os
   # accessible as a variable in index.html:
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
-from flask import Flask, request, render_template, g, redirect, Response
+from flask import Flask, request, render_template, g, redirect, Response, flash, session
 from flask_sqlalchemy import SQLAlchemy
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
@@ -91,14 +91,14 @@ def home():
     if result.rowcount > 0:
         password = result.first()[0]
     else:
-        print('wrong username!')
+        flash('wrong username!')
         return home()
     if request.form['pwd'] == password and result is not None:
         session['username'] = request.form['username']
         session['logged_in'] = True
         return render_template('index.html')
     elif request.form['pwd'] != password:
-        print('wrong password!')
+        flash('wrong password!')
         return render_template('Register.html')
 
 def getTime():
