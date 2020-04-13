@@ -181,7 +181,7 @@ def add_exercise():
   c = request.form['c'] # calories
   time = request.form['time'] # date_time
   username = session.get('username') # username
-  u = g.conn.execute("SELECT ID FROM register WHERE username =  username",{'username':username}) 
+  u = g.conn.execute("SELECT ID FROM register WHERE username =  %(username)s",{'username':username}) 
   u_id = int(u.first()[0])# id
   e = g.conn.execute("SELECT max(exercise_id) FROM exercise_diary")
   e_id = int(e.first()[0])+1
@@ -201,12 +201,13 @@ def add_meal():
   f_id = int(f_id.first()[0])
   number = request.form['number'] # food number
   username = session.get('username') # username
-  c_id = g.conn.execute("SELECT ID FROM register WHERE username =  username",{'username':username})
+  c_id = g.conn.execute("SELECT ID FROM register WHERE username =  %(username)s",{'username':username})
   c_id = int(c_id.first()[0])# creator_id
   # check if new meal
-  old_meal = g.conn.execute("SELECT meal_id FROM Meal_Diary WHERE date_time =  time",{'time':time})
+  cmd = "SELECT meal_id FROM Meal_Diary WHERE date_time = %s AND creator_id = %s"
+  old_meal = g.conn.execute(cmd,time,c_id)
   old_meal = int(old_meal.first()[0])
-  if(old_meal != ''):
+  if (old_meal == ''):
       m_id = g.conn.execute("SELECT max(meal_id) FROM Meal_Diary") 
       m_id = int(m_id.first()[0])+1
       cmd1 = "INSERT INTO meal_diary(meal_id,type,date_time,name,creator_id) VALUES (%s,%s,%s,%s,%s);"
@@ -225,7 +226,7 @@ def add_food():
   p = request.form['p'] # protein
   f = request.form['f'] # fat
   username = session.get('username')
-  c_id = g.conn.execute("SELECT ID FROM register WHERE username =  username",{'username':username})
+  c_id = g.conn.execute("SELECT ID FROM register WHERE username =  %(username)s",{'username':username})
   c_id = int(c_id.first()[0])
   f_id = g.conn.execute("SELECT max(food_id) FROM food_database")
   f_id = int(f_id.first()[0])+1
@@ -246,11 +247,28 @@ def register():
     pw = request.form['Password']
     cmd = "INSERT INTO Register (id, first_name, last_name, username,email,password) VALUES (%s,%s,%s,%s,%s,%s);"
     g.conn.execute(cmd,user_id,fn,ln,un,em,pw)
-    session['username'] = request.form['username']
-    session['logged_in'] = True
-    return render_template('index.html')
+    return render_template('Register.html')
         
-    
+@app.route('/info', methods=['POST'])
+def info():
+    username = session.get('username')
+    # result = g.conn.execute("SELECT * FROM Register WHERE username = username",{'username':username})
+    user_id = g.conn.execute("SELECT id FROM Register WHERE username = %(username)s",{'username':username})
+    user_id = int(user_id.first()[0])
+    cw = request.form['Current_Weight']
+    h = request.form['Height']
+    gw = request.form['Goal_Weight']
+    s = request.form['Sex']
+    tc = request.form['Target_Calories']
+    result = g.conn.execute("SELECT id FROM user_info WHERE id = %(user_id)s",{'user_id':user_id})
+    result = result.first()[0]
+    if (result == ''):
+        cmd1 = "INSERT INTO user_info (id, Current_Weight, Height, Goal_Weight,Sex,Target_Calories) VALUES (%s,%s,%s,%s,%s,%s);"
+        g.conn.execute(cmd1,user_id,cw,h,gw,s,tc)
+    else:
+        cmd2 = "UPDATE user_info SET Current_Weight = %s, Height = %s, Goal_Weight = %s, Sex = %s, Target_Calories = %s"
+        g.conn.execute(cmd2,cw,h,gw,s,tc)
+    return render_template('index.html')    
 		    
 		
 
