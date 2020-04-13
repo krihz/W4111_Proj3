@@ -209,7 +209,6 @@ def add_meal():
   names = []
   for result in old_meal:
     names.append(result)
-  old_meal.close()
   if (names is None):
       m_id = g.conn.execute("SELECT max(meal_id) FROM Meal_Diary") 
       m_id = int(m_id.first()[0])+1
@@ -269,6 +268,7 @@ def info():
     for r in result:
         names.append(r)
     result.close()
+    
     if (names is None):
         cmd1 = "INSERT INTO user_info (id, Current_Weight, Height, Goal_Weight,Sex,Target_Calories) VALUES (%s,%s,%s,%s,%s,%s);"
         g.conn.execute(cmd1,user_id,cw,h,gw,s,tc)
