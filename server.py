@@ -153,7 +153,7 @@ def Food_calorie():
     names = []
     # names.append(["Food_Name", "Calories", "Protein","Fat"])
     for result in cursor:
-      names.append(result['calorie'])
+      names.append(result['calories'])
     cursor.close()
     context = dict(data = names)
   else:
