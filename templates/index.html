@@ -10,7 +10,9 @@
   <br>
 
 <form method="POST" action="/BMI">
-  <p>My BMI: <button type="submit" formaction="/BMI">Show My BMI</button> <br> My BMI is 
+  <p>My BMI: <button type="submit" formaction="/BMI">Show My BMI</button> <br> <div> 
+ My BMI is{{BMI}}
+  </div> 
 </p>
   
   </form>
@@ -23,9 +25,7 @@
   <br>
   <form method = "POST" action="/Exercise">
   <p>Search for Exercise History: <button type="submit" formaction="/Exercise">Show All</button></p>
-<div> 
- {{BMI}}
-  </div> 
+
   </form>
   <br>
   <form method = "POST" action="/Food_calorie">
