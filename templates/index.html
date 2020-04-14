@@ -8,6 +8,13 @@
 
   <u>You can search past record here:</u>
   <br>
+
+<form method="POST" action="/BMI">
+  <p>My BMI: <button type="submit" formaction="/BMI">Show My BMI</button> </p>
+  
+  </form>
+  <br>
+
   <form method="POST" action="/Meal">
   <p>Search for Meal History: <button type="submit" formaction="/Meal">Show All</button> </p>
   
@@ -19,12 +26,14 @@
   </form>
   <br>
   <form method = "POST" action="/Food_calorie">
-  <p> Search for Food calorie: <input type="text" name="name">&nbsp;<input type="submit" value="Search"> </p>
+  <p> Search for Food calorie: <input type="text" name="name">&nbsp;<input type="submit" value="Search"> <br>
+<i>need to be uppercase</i></p>
   
   </form>
   <br>
   <form method = "POST" action="/Forum">
-  <p> Search for topic in Forum: <input type="text" name="name">&nbsp; <input type="submit" value="Search"></p>
+  <p> Search for topic in Forum: <input type="text" name="name">&nbsp; <input type="submit" value="Search"><br>
+<i>Note: case sensitive</i></p>
   
   </form>
   <br>
@@ -122,6 +131,7 @@
   <br>
   <hr>
 <p>Please enter time like <i>YYYY-MM-DD HH:MM:SS</i></p>
+<p>Please enter food item in uppercase</p>
 </body>
 
 

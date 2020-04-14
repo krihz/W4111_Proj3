@@ -265,6 +265,34 @@ def addForum():
     g.conn.execute(cmd,f_id,Topic,Theme,Date_Time,user_id,Content)
     return render_template('index.html')
 
+@app.route('/info', methods=['POST'])
+def info():
+    username = session.get('username')
+    # result = g.conn.execute("SELECT * FROM Register WHERE username = username",{'username':username})
+    user_id = g.conn.execute("SELECT id FROM Register WHERE username = %(username)s",{'username':username})
+    user_id = int(user_id.first()[0])
+    cw = request.form['Current_Weight']
+    h = request.form['Height']
+    gw = request.form['Goal_Weight']
+    s = request.form['Sex']
+    tc = request.form['Target_Calories']
+    cmd = "UPDATE user_info SET Current_Weight = %s, Height = %s, Goal_Weight = %s, Sex = %s, Target_Calories = %s WHERE id = %s;"
+    g.conn.execute(cmd,cw,h,gw,s,tc,user_id)
+    return render_template('index.html')   
+
+@app.route('/BMI', methods=['POST'])
+def BMI():
+    username = session.get('username')
+    # result = g.conn.execute("SELECT * FROM Register WHERE username = username",{'username':username})
+    user_id = g.conn.execute("SELECT id FROM Register WHERE username = %(username)s",{'username':username})
+    user_id = int(user_id.first()[0])
+    weight = g.conn.execute("SELECT Current_Weight FROM user_info WHERE id = %(user_id)s",{'user_id':user_id})
+    weight = weight.first()[0]
+    height = g.conn.execute("SELECT Height FROM user_info WHERE id = %(user_id)s",{'user_id':user_id})
+    height = height.first()[0]
+    BMI = weight/(height*height)
+    context = {'BMI':BMI}
+    return render_template("index.html", **context)
 
 # @app.route('/login')
 # def login():
