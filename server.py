@@ -179,7 +179,7 @@ def Exercise():
 def add_exercise():
   e_name = request.form['e_name'] # exercise_name
   c = request.form['c'] # calories
-  time = request.form['time'] # date_time
+  time = request.form['Date_Time'] # date_time
   username = session.get('username') # username
   u = g.conn.execute("SELECT ID FROM register WHERE username =  %(username)s",{'username':username}) 
   u_id = int(u.first()[0])# id
