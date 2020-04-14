@@ -248,20 +248,6 @@ def register():
     g.conn.execute(cmd2,user_id,cw,h,gw,s,tc)
     return render_template('Register.html')
         
-@app.route('/info', methods=['POST'])
-def info():
-    username = session.get('username')
-    # result = g.conn.execute("SELECT * FROM Register WHERE username = username",{'username':username})
-    user_id = g.conn.execute("SELECT id FROM Register WHERE username = %(username)s",{'username':username})
-    user_id = int(user_id.first()[0])
-    cw = request.form['Current_Weight']
-    h = request.form['Height']
-    gw = request.form['Goal_Weight']
-    s = request.form['Sex']
-    tc = request.form['Target_Calories']
-    cmd = "UPDATE user_info SET Current_Weight = %s, Height = %s, Goal_Weight = %s, Sex = %s, Target_Calories = %s WHERE id = %s;"
-    g.conn.execute(cmd,cw,h,gw,s,tc,user_id)
-    return render_template('index.html')    
 		    
 @app.route('/addForum', methods=['POST'])
 def addForum():
