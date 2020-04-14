@@ -6,26 +6,25 @@
 
   <h1>Home Page</h1>
 
-  You can search past record here:
-  <hr>
+  <u>You can search past record here:</u>
   <br>
   <form method="POST" action="/Meal">
-  <p>Search for Meal History: <button type="submit" formaction="/Meal">Search</button> </p>
+  <p>Search for Meal History: <button type="submit" formaction="/Meal">Show All</button> </p>
   
   </form>
   <br>
   <form method = "POST" action="/Exercise">
-  <p>Search for Exercise History: <button type="submit" formaction="/Exercise">Search</button></p>
+  <p>Search for Exercise History: <button type="submit" formaction="/Exercise">Show All</button></p>
 
   </form>
   <br>
   <form method = "POST" action="/Food_calorie">
-  <p> Search for Food calorie: <input type="text" name="name"><input type="submit" value="Search"> </p>
+  <p> Search for Food calorie: <input type="text" name="name">&nbsp;<input type="submit" value="Search"> </p>
   
   </form>
   <br>
   <form method = "POST" action="/Forum">
-  <p> Search for topic in Forum: <input type="text" name="name"> <input type="submit" value="Search"></p>
+  <p> Search for topic in Forum: <input type="text" name="name">&nbsp; <input type="submit" value="Search"></p>
   
   </form>
   <br>
@@ -42,89 +41,90 @@
    {% endfor %} 
    </table> 
  </div> 
-  <hr>
+ <hr>
   <br>
   <br>
- You can add new record here:
-  <hr>
+ <u>You can add/update new record here:</u>
   <br>
-  Add user information:
   <form action="/info" method="post">
+  <p><u>Update user information:</u>
     <label for="Current_Weight">Current Weight:</label>
-    <input type="text" id="Current_Weight" name="Current_Weight"><br>
-    <br>
+    <input type="text" id="Current_Weight" name="Current_Weight">
+    /kg &nbsp;
     <label for="Height">Height:</label>
-    <input type="text" id="Height" name="Height"><br>
+    <input type="text" id="Height" name="Height">
+    /m <br>
     <br>
     <label for="Goal_Weight">Goal Weight:</label>
-    <input type="text" id="Goal_Weight" name="Goal_Weight"><br>
-    <br>
+    <input type="text" id="Goal_Weight" name="Goal_Weight">/kg &nbsp;
     <label for="Sex">Sex:</label>
-    <input type="text" id="Sex" name="Sex"><br>
-    <br>
-
+    <input type="text" id="Sex" name="Sex">
+    F/M &nbsp;
     <label for="Target_Calories">Target Calories:</label>
-    <input type="text" id="Target_Calories" name="Target_Calories"><br>
-    <br>
-     <input type="submit" value="New Info">
-
+    <input type="text" id="Target_Calories" name="Target_Calories">
+     /Cal 
+     &nbsp; &nbsp;
+     <input type="submit" value="Update Info">
+  </p>
   </form>
+  <br>
 
   <form method = "POST" action="/add_meal">
-  <p>Add new meal record:</p>
+  <p><u>Add new meal record:</u>
   Meal Type: <input type="text" name="t">
-  Meal Time: <input type="text" name="time"> 
-  Meal Name: <input type="text" name="name"><br>
-  <br>Food Name: <input type="text" name="f_name">
+  Meal Time: <input type="text" name="time"><br>
+  <br> 
+  Meal Name: <input type="text" name="name">
+  Food Name: <input type="text" name="f_name">
   Food Number: <input type="text" name="number">
+&nbsp; &nbsp;
   <input type="submit" value="Add Meal">
+  </p>
   </form>
-
   <br>
-
 <form method = "POST" action="/add_exercise">
-  <p>Add new exercise record:</p>
+  <p><u>Add new exercise record:</u>
   Exercise Name: <input type="text" name="e_name">
   Calories: <input type="text" name="c"> 
-  Time: <input type="text" name="time">
+  Time: <input type="text" name="Date Time">
+&nbsp; &nbsp;
   <input type="submit" value="Add Exercise">
+</p>
   </form>
 
   <br>
-
 <form method = "POST" action="/add_food">
-  <p>Add new food information:</p>
+  <p><u>Add new food information:</u>
   Food Name: <input type="text" name="f_name">
   Calories: <input type="text" name="c"> 
   Protein: <input type="text" name="p">
   Fat: <input type="text" name="f">  
+&nbsp; &nbsp;
   <input type="submit" value="Add New Food">
+</p>
   </form>
 
-  Forum:
-  <br>
-  <form action="/addForum" method="post">
+<form action="/addForum" method="post">
+<p> <u>Forum:</u>
     <label for="Topic">Topic:</label>
-    <input type="text" id="Topic" name="Topic"><br>
-    <br>
+    <input type="text" id="Topic" name="Topic"> 
     <label for="Theme">Theme:</label>
     <input type="text" id="Theme" name="Theme"><br>
     <br>
     <label for="Date_Time">Date Time:</label>
-    <input type="text" id="Date_Time" name="Date_Time"><br>
-    <br>
+    <input type="text" id="Date_Time" name="Date_Time">
     <label for="Content">Content:</label>
     <input type="text" id="Content" name="Content"><br>
     <br>
 
     <input type="submit" value="Add New Topic">
-    <br>
+    </p>
 
   </form>
   
   <br>
   <hr>
-<p>Please enter time like <i>YYYY/MM/DD HH:MM</i></p>
+<p>Please enter time like <i>YYYY-MM-DD HH:MM:SS</i></p>
 </body>
 
 
