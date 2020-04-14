@@ -10,7 +10,8 @@
   <br>
 
 <form method="POST" action="/BMI">
-  <p>My BMI: <button type="submit" formaction="/BMI">Show My BMI</button> </p>
+  <p>My BMI: <button type="submit" formaction="/BMI">Show My BMI</button> <br> My BMI is 
+</p>
   
   </form>
   <br>
@@ -22,7 +23,11 @@
   <br>
   <form method = "POST" action="/Exercise">
   <p>Search for Exercise History: <button type="submit" formaction="/Exercise">Show All</button></p>
-
+<div> 
+ {{BMI}}
+ </tr> 
+   {% endfor %} 
+   </table> 
   </form>
   <br>
   <form method = "POST" action="/Food_calorie">
