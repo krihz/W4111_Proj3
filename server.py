@@ -103,7 +103,7 @@ def home():
         return render_template('Register.html')
 
 def getTime():
-    utc = datetime.datetime.utcnow()
+    utc = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     return utc
 
 @app.route('/Newuser', methods=['POST'])
@@ -267,7 +267,7 @@ def info():
 def addForum():
     username = session.get('username')
     user_id = g.conn.execute("SELECT id FROM Register WHERE username = %(username)s",{'username':username})
-    user_id = int(user_id.first()[0])+1
+    user_id = int(user_id.first()[0])
     f_id = g.conn.execute("SELECT max(forums_id) FROM Forums") 
     f_id = int(f_id.first()[0])+1
     Topic = request.form['Topic']
