@@ -291,7 +291,7 @@ def BMI():
     height = g.conn.execute("SELECT Height FROM user_info WHERE id = %(user_id)s",{'user_id':user_id})
     height = height.first()[0]
     BMI = weight/(height*height)
-    names = [['BMI'],int(BMI)]
+    names = [['BMI'],[BMI]]
     context = dict(data = names)
     return render_template("index.html", **context)
 
