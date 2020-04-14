@@ -187,7 +187,6 @@ def add_exercise():
   e_id = int(e.first()[0])+1
   cmd = "INSERT INTO Exercise_Diary(exercise_id,exercise_name,calories,date_time,id) VALUES (%s,%s,%s,%s,%s);"
   g.conn.execute(cmd,e_id,e_name,c,time,u_id)
-  flash('Successfully added!')
   return render_template('index.html')
 
 @app.route('/add_meal', methods=['POST'])
@@ -268,11 +267,12 @@ def info():
 def addForum():
     username = session.get('username')
     user_id = g.conn.execute("SELECT id FROM Register WHERE username = %(username)s",{'username':username})
+    user_id = int(user_id.first()[0])+1
     f_id = g.conn.execute("SELECT max(forums_id) FROM Forums") 
     f_id = int(f_id.first()[0])+1
     Topic = request.form['Topic']
     Theme = request.form['Theme']
-    Date_Time = request.form['Date_Time']
+    Date_Time = getTime()
     Content = request.form['Content']
     
     cmd = "INSERT INTO Forums (forums_id, topic, theme, date_time,id,content) VALUES (%s,%s,%s,%s,%s,%s);"
